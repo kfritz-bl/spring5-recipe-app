@@ -48,11 +48,11 @@ public class IngredientServiceImplTest {
     }
 
     @Test
-    public void findByRecipeIdAndId() throws Exception {
+    public void findByRecipeIdAndId() {
     }
 
     @Test
-    public void findByRecipeIdAndReceipeIdHappyPath() throws Exception {
+    public void findByRecipeIdAndReceipeIdHappyPath() {
         //given
         Recipe recipe = new Recipe();
         recipe.setId(1L);
@@ -84,7 +84,7 @@ public class IngredientServiceImplTest {
 
 
     @Test
-    public void testSaveRecipeCommand() throws Exception {
+    public void testSaveRecipeCommand() {
         //given
         IngredientCommand command = new IngredientCommand();
         command.setId(3L);
@@ -110,7 +110,7 @@ public class IngredientServiceImplTest {
     }
 
     @Test
-    public void testDeleteById() throws Exception {
+    public void testDeleteById() {
         //given
         Recipe recipe = new Recipe();
         Ingredient ingredient = new Ingredient();

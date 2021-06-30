@@ -83,7 +83,7 @@ public class ImageControllerTest {
 
         int i = 0;
 
-        for (byte primByte : s.getBytes()){
+        for (byte primByte : s.getBytes()) {
             bytesBoxed[i++] = primByte;
         }
 
@@ -106,6 +106,8 @@ public class ImageControllerTest {
 
         mockMvc.perform(get("/recipe/asdf/recipeimage"))
                 .andExpect(status().isBadRequest())
-                .andExpect(view().name("400error"));
+                .andExpect(view().name("error"))
+                .andExpect(model().attributeExists("status"))
+                .andExpect(model().attribute("status", 404));
     }
 }

@@ -50,7 +50,7 @@ public class IndexControllerTest {
     }
 
     @Test
-    public void getIndexPage() throws Exception {
+    public void getIndexPage() {
 
         //given
         Set<Recipe> recipes = new HashSet<>();
@@ -63,6 +63,7 @@ public class IndexControllerTest {
 
         when(recipeService.getRecipes()).thenReturn(recipes);
 
+        @SuppressWarnings("unchecked")
         ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 
         //when
@@ -76,5 +77,4 @@ public class IndexControllerTest {
         Set<Recipe> setInController = argumentCaptor.getValue();
         assertEquals(2, setInController.size());
     }
-
 }

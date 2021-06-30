@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class UnitOfMeasureToUnitOfMeasureCommandTest {
 
     public static final String DESCRIPTION = "description";
-    public static final Long LONG_VALUE = new Long(1L);
+    public static final Long LONG_VALUE = 1L;
 
     UnitOfMeasureToUnitOfMeasureCommand converter;
 
@@ -23,12 +23,12 @@ public class UnitOfMeasureToUnitOfMeasureCommandTest {
     }
 
     @Test
-    public void testNullObjectConvert() throws Exception {
+    public void testNullObjectConvert() {
         assertNull(converter.convert(null));
     }
 
     @Test
-    public void testEmptyObj() throws Exception {
+    public void testEmptyObj() {
         assertNotNull(converter.convert(new UnitOfMeasure()));
     }
 
@@ -42,8 +42,8 @@ public class UnitOfMeasureToUnitOfMeasureCommandTest {
         UnitOfMeasureCommand uomc = converter.convert(uom);
 
         //then
+        assert uomc != null;
         assertEquals(LONG_VALUE, uomc.getId());
         assertEquals(DESCRIPTION, uomc.getDescription());
     }
-
 }

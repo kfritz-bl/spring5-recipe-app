@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  */
 public class CategoryToCategoryCommandTest {
 
-    public static final Long ID_VALUE = new Long(1L);
+    public static final Long ID_VALUE = 1L;
     public static final String DESCRIPTION = "descript";
     CategoryToCategoryCommand convter;
 
@@ -22,12 +22,12 @@ public class CategoryToCategoryCommandTest {
     }
 
     @Test
-    public void testNullObject() throws Exception {
+    public void testNullObject() {
         assertNull(convter.convert(null));
     }
 
     @Test
-    public void testEmptyObject() throws Exception {
+    public void testEmptyObject() {
         assertNotNull(convter.convert(new Category()));
     }
 
@@ -42,6 +42,7 @@ public class CategoryToCategoryCommandTest {
         CategoryCommand categoryCommand = convter.convert(category);
 
         //then
+        assert categoryCommand != null;
         assertEquals(ID_VALUE, categoryCommand.getId());
         assertEquals(DESCRIPTION, categoryCommand.getDescription());
 

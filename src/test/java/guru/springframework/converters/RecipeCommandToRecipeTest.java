@@ -38,12 +38,12 @@ public class RecipeCommandToRecipeTest {
     }
 
     @Test
-    public void testNullObject() throws Exception {
+    public void testNullObject() {
         assertNull(converter.convert(null));
     }
 
     @Test
-    public void testEmptyObject() throws Exception {
+    public void testEmptyObject() {
         assertNotNull(converter.convert(new RecipeCommand()));
     }
 
@@ -85,7 +85,7 @@ public class RecipeCommandToRecipeTest {
         recipeCommand.getIngredients().add(ingredient2);
 
         //when
-        Recipe recipe  = converter.convert(recipeCommand);
+        Recipe recipe = converter.convert(recipeCommand);
 
         assertNotNull(recipe);
         assertEquals(RECIPE_ID, recipe.getId());

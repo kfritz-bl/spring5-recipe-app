@@ -38,13 +38,14 @@ public class RecipeServiceIT {
 
     @Transactional
     @Test
-    public void testSaveOfDescription() throws Exception {
+    public void testSaveOfDescription() {
         //given
         Iterable<Recipe> recipes = recipeRepository.findAll();
         Recipe testRecipe = recipes.iterator().next();
         RecipeCommand testRecipeCommand = recipeToRecipeCommand.convert(testRecipe);
 
         //when
+        assert testRecipeCommand != null;
         testRecipeCommand.setDescription(NEW_DESCRIPTION);
         RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(testRecipeCommand);
 
