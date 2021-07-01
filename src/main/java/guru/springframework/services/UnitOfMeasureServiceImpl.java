@@ -1,8 +1,9 @@
 package guru.springframework.services;
 
 import guru.springframework.commands.UnitOfMeasureCommand;
-import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
+import guru.springframework.converters.UnitOfMeasureToCommand;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -12,24 +13,25 @@ import java.util.stream.StreamSupport;
 /**
  * Created by jt on 6/28/17.
  */
+@Slf4j
 @Service
 public class UnitOfMeasureServiceImpl implements UnitOfMeasureService {
 
-    private final UnitOfMeasureRepository unitOfMeasureRepository;
-    private final UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
+    private final UnitOfMeasureRepository uomRepo;
+    private final UnitOfMeasureToCommand uomToCmd;
 
-    public UnitOfMeasureServiceImpl(UnitOfMeasureRepository unitOfMeasureRepository,
-                                    UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand) {
-        this.unitOfMeasureRepository = unitOfMeasureRepository;
-        this.unitOfMeasureToUnitOfMeasureCommand = unitOfMeasureToUnitOfMeasureCommand;
+    public UnitOfMeasureServiceImpl(UnitOfMeasureRepository uomRepo,
+                                    UnitOfMeasureToCommand uomToCmd) {
+        this.uomRepo = uomRepo;
+        this.uomToCmd = uomToCmd;
     }
 
     @Override
     public Set<UnitOfMeasureCommand> listAllUoms() {
-
-        return StreamSupport.stream(unitOfMeasureRepository.findAll()
+        log.debug("Getting the list of all UOMs");
+        return StreamSupport.stream(uomRepo.findAll()
                 .spliterator(), false)
-                .map(unitOfMeasureToUnitOfMeasureCommand::convert)
+                .map(uomToCmd::convert)
                 .collect(Collectors.toSet());
     }
 }

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RecipeToRecipeCommandTest {
+public class RecipeToCommandTest {
 
     public static final Long RECIPE_ID = 1L;
     public static final Integer COOK_TIME = Integer.valueOf("5");
@@ -19,18 +19,19 @@ public class RecipeToRecipeCommandTest {
     public static final String SOURCE = "Source";
     public static final String URL = "Some URL";
     public static final Long CAT_ID_1 = 1L;
-    public static final Long CAT_ID2 = 2L;
-    public static final Long INGRED_ID_1 = 3L;
-    public static final Long INGRED_ID_2 = 4L;
+    public static final Long CAT_ID_2 = 2L;
+    public static final Long ING_ID_1 = 3L;
+    public static final Long ING_ID_2 = 4L;
     public static final Long NOTES_ID = 9L;
-    RecipeToRecipeCommand converter;
+    RecipeToCommand converter;
 
     @Before
     public void setUp() throws Exception {
-        converter = new RecipeToRecipeCommand(
-                new CategoryToCategoryCommand(),
-                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()),
-                new NotesToNotesCommand());
+        converter = new RecipeToCommand(
+                new CategoryToCommand(),
+                new IngredientToCommand(
+                        new UnitOfMeasureToCommand()),
+                new NotesToCommand());
     }
 
     @Test
@@ -59,45 +60,40 @@ public class RecipeToRecipeCommandTest {
 
         Notes notes = new Notes();
         notes.setId(NOTES_ID);
-
         recipe.setNotes(notes);
 
         Category category = new Category();
         category.setId(CAT_ID_1);
-
-        Category category2 = new Category();
-        category2.setId(CAT_ID2);
-
         recipe.getCategories().add(category);
-        recipe.getCategories().add(category2);
+
+        category = new Category();
+        category.setId(CAT_ID_2);
+        recipe.getCategories().add(category);
 
         Ingredient ingredient = new Ingredient();
-        ingredient.setId(INGRED_ID_1);
-
-        Ingredient ingredient2 = new Ingredient();
-        ingredient2.setId(INGRED_ID_2);
-
+        ingredient.setId(ING_ID_1);
         recipe.getIngredients().add(ingredient);
-        recipe.getIngredients().add(ingredient2);
+
+        ingredient = new Ingredient();
+        ingredient.setId(ING_ID_2);
+        recipe.getIngredients().add(ingredient);
 
         //when
-        RecipeCommand command = converter.convert(recipe);
+        RecipeCommand cmd = converter.convert(recipe);
 
         //then
-        assertNotNull(command);
-        assertEquals(RECIPE_ID, command.getId());
-        assertEquals(COOK_TIME, command.getCookTime());
-        assertEquals(PREP_TIME, command.getPrepTime());
-        assertEquals(DESCRIPTION, command.getDescription());
-        assertEquals(DIFFICULTY, command.getDifficulty());
-        assertEquals(DIRECTIONS, command.getDirections());
-        assertEquals(SERVINGS, command.getServings());
-        assertEquals(SOURCE, command.getSource());
-        assertEquals(URL, command.getUrl());
-        assertEquals(NOTES_ID, command.getNotes().getId());
-        assertEquals(2, command.getCategories().size());
-        assertEquals(2, command.getIngredients().size());
-
+        assertNotNull(cmd);
+        assertEquals(RECIPE_ID, cmd.getId());
+        assertEquals(COOK_TIME, cmd.getCookTime());
+        assertEquals(PREP_TIME, cmd.getPrepTime());
+        assertEquals(DESCRIPTION, cmd.getDescription());
+        assertEquals(DIFFICULTY, cmd.getDifficulty());
+        assertEquals(DIRECTIONS, cmd.getDirections());
+        assertEquals(SERVINGS, cmd.getServings());
+        assertEquals(SOURCE, cmd.getSource());
+        assertEquals(URL, cmd.getUrl());
+        assertEquals(NOTES_ID, cmd.getNotes().getId());
+        assertEquals(2, cmd.getCategories().size());
+        assertEquals(2, cmd.getIngredients().size());
     }
-
 }

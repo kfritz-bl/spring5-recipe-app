@@ -10,15 +10,15 @@ import static org.junit.Assert.*;
 /**
  * Created by jt on 6/21/17.
  */
-public class NotesToNotesCommandTest {
+public class NotesToCommandTest {
 
     public static final Long ID_VALUE = 1L;
     public static final String RECIPE_NOTES = "Notes";
-    NotesToNotesCommand converter;
+    NotesToCommand converter;
 
     @Before
     public void setUp() throws Exception {
-        converter = new NotesToNotesCommand();
+        converter = new NotesToCommand();
     }
 
     @Test
@@ -29,12 +29,12 @@ public class NotesToNotesCommandTest {
         notes.setRecipeNotes(RECIPE_NOTES);
 
         //when
-        NotesCommand notesCommand = converter.convert(notes);
+        NotesCommand cmd = converter.convert(notes);
 
         //then
-        assert notesCommand != null;
-        assertEquals(ID_VALUE, notesCommand.getId());
-        assertEquals(RECIPE_NOTES, notesCommand.getRecipeNotes());
+        assert cmd != null;
+        assertEquals(ID_VALUE, cmd.getId());
+        assertEquals(RECIPE_NOTES, cmd.getRecipeNotes());
     }
 
     @Test

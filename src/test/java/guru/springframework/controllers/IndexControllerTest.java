@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class IndexControllerTest {
 
     @Mock
-    RecipeService recipeService;
+    RecipeService recipeSvc;
 
     @Mock
     Model model;
@@ -37,7 +37,7 @@ public class IndexControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        controller = new IndexController(recipeService);
+        controller = new IndexController(recipeSvc);
     }
 
     @Test
@@ -51,7 +51,6 @@ public class IndexControllerTest {
 
     @Test
     public void getIndexPage() {
-
         //given
         Set<Recipe> recipes = new HashSet<>();
         recipes.add(new Recipe());
@@ -61,7 +60,7 @@ public class IndexControllerTest {
 
         recipes.add(recipe);
 
-        when(recipeService.getRecipes()).thenReturn(recipes);
+        when(recipeSvc.getRecipes()).thenReturn(recipes);
 
         @SuppressWarnings("unchecked")
         ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
@@ -69,10 +68,9 @@ public class IndexControllerTest {
         //when
         String viewName = controller.getIndexPage(model);
 
-
         //then
         assertEquals("index", viewName);
-        verify(recipeService, times(1)).getRecipes();
+        verify(recipeSvc, times(1)).getRecipes();
         verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
         Set<Recipe> setInController = argumentCaptor.getValue();
         assertEquals(2, setInController.size());

@@ -7,15 +7,15 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class NotesCommandToNotesTest {
+public class CommandToNotesTest {
 
     public static final Long ID_VALUE = 1L;
     public static final String RECIPE_NOTES = "Notes";
-    NotesCommandToNotes converter;
+    CommandToNotes converter;
 
     @Before
     public void setUp() throws Exception {
-        converter = new NotesCommandToNotes();
+        converter = new CommandToNotes();
     }
 
     @Test
@@ -31,12 +31,12 @@ public class NotesCommandToNotesTest {
     @Test
     public void convert() throws Exception {
         //given
-        NotesCommand notesCommand = new NotesCommand();
-        notesCommand.setId(ID_VALUE);
-        notesCommand.setRecipeNotes(RECIPE_NOTES);
+        NotesCommand cmd = new NotesCommand();
+        cmd.setId(ID_VALUE);
+        cmd.setRecipeNotes(RECIPE_NOTES);
 
         //when
-        Notes notes = converter.convert(notesCommand);
+        Notes notes = converter.convert(cmd);
 
         //then
         assertNotNull(notes);

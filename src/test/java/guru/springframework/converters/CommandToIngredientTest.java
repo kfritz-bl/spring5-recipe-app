@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
-public class IngredientCommandToIngredientTest {
+public class CommandToIngredientTest {
 
     //public static final Recipe RECIPE = new Recipe();
     public static final BigDecimal AMOUNT = new BigDecimal("1");
@@ -18,11 +18,11 @@ public class IngredientCommandToIngredientTest {
     public static final Long ID_VALUE = 1L;
     public static final Long UOM_ID = 2L;
 
-    IngredientCommandToIngredient converter;
+    CommandToIngredient converter;
 
     @Before
     public void setUp() throws Exception {
-        converter = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
+        converter = new CommandToIngredient(new CommandToUnitOfMeasure());
     }
 
     @Test
@@ -38,16 +38,16 @@ public class IngredientCommandToIngredientTest {
     @Test
     public void convert() throws Exception {
         //given
-        IngredientCommand command = new IngredientCommand();
-        command.setId(ID_VALUE);
-        command.setAmount(AMOUNT);
-        command.setDescription(DESCRIPTION);
-        UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
-        unitOfMeasureCommand.setId(UOM_ID);
-        command.setUom(unitOfMeasureCommand);
+        IngredientCommand cmd = new IngredientCommand();
+        cmd.setId(ID_VALUE);
+        cmd.setAmount(AMOUNT);
+        cmd.setDescription(DESCRIPTION);
+        UnitOfMeasureCommand uomCmd = new UnitOfMeasureCommand();
+        uomCmd.setId(UOM_ID);
+        cmd.setUom(uomCmd);
 
         //when
-        Ingredient ingredient = converter.convert(command);
+        Ingredient ingredient = converter.convert(cmd);
 
         //then
         assertNotNull(ingredient);
@@ -61,13 +61,13 @@ public class IngredientCommandToIngredientTest {
     @Test
     public void convertWithNullUOM() {
         //given
-        IngredientCommand command = new IngredientCommand();
-        command.setId(ID_VALUE);
-        command.setAmount(AMOUNT);
-        command.setDescription(DESCRIPTION);
+        IngredientCommand cmd = new IngredientCommand();
+        cmd.setId(ID_VALUE);
+        cmd.setAmount(AMOUNT);
+        cmd.setDescription(DESCRIPTION);
 
         //when
-        Ingredient ingredient = converter.convert(command);
+        Ingredient ingredient = converter.convert(cmd);
 
         //then
         assertNotNull(ingredient);
@@ -76,5 +76,4 @@ public class IngredientCommandToIngredientTest {
         assertEquals(AMOUNT, ingredient.getAmount());
         assertEquals(DESCRIPTION, ingredient.getDescription());
     }
-
 }

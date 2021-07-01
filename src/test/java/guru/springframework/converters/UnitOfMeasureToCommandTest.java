@@ -10,16 +10,16 @@ import static org.junit.Assert.*;
 /**
  * Created by jt on 6/21/17.
  */
-public class UnitOfMeasureToUnitOfMeasureCommandTest {
+public class UnitOfMeasureToCommandTest {
 
     public static final String DESCRIPTION = "description";
     public static final Long LONG_VALUE = 1L;
 
-    UnitOfMeasureToUnitOfMeasureCommand converter;
+    UnitOfMeasureToCommand converter;
 
     @Before
     public void setUp() throws Exception {
-        converter = new UnitOfMeasureToUnitOfMeasureCommand();
+        converter = new UnitOfMeasureToCommand();
     }
 
     @Test
@@ -38,12 +38,13 @@ public class UnitOfMeasureToUnitOfMeasureCommandTest {
         UnitOfMeasure uom = new UnitOfMeasure();
         uom.setId(LONG_VALUE);
         uom.setDescription(DESCRIPTION);
+
         //when
-        UnitOfMeasureCommand uomc = converter.convert(uom);
+        UnitOfMeasureCommand cmd = converter.convert(uom);
 
         //then
-        assert uomc != null;
-        assertEquals(LONG_VALUE, uomc.getId());
-        assertEquals(DESCRIPTION, uomc.getDescription());
+        assert cmd != null;
+        assertEquals(LONG_VALUE, cmd.getId());
+        assertEquals(DESCRIPTION, cmd.getDescription());
     }
 }

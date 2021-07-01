@@ -1,7 +1,7 @@
 package guru.springframework.services;
 
 import guru.springframework.commands.UnitOfMeasureCommand;
-import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
+import guru.springframework.converters.UnitOfMeasureToCommand;
 import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import org.junit.Before;
@@ -17,39 +17,40 @@ import static org.mockito.Mockito.*;
 
 public class UnitOfMeasureServiceImplTest {
 
-    UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
-    UnitOfMeasureService service;
+    UnitOfMeasureToCommand uomToCmd = new UnitOfMeasureToCommand();
+
+    UnitOfMeasureService uomSvc;
 
     @Mock
-    UnitOfMeasureRepository unitOfMeasureRepository;
+    UnitOfMeasureRepository uomRepo;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        service = new UnitOfMeasureServiceImpl(unitOfMeasureRepository, unitOfMeasureToUnitOfMeasureCommand);
+        uomSvc = new UnitOfMeasureServiceImpl(uomRepo, uomToCmd);
     }
 
     @Test
     public void listAllUoms() {
         //given
-        Set<UnitOfMeasure> unitOfMeasures = new HashSet<>();
-        UnitOfMeasure uom1 = new UnitOfMeasure();
-        uom1.setId(1L);
-        unitOfMeasures.add(uom1);
+        Set<UnitOfMeasure> uomSet = new HashSet<>();
 
-        UnitOfMeasure uom2 = new UnitOfMeasure();
-        uom2.setId(2L);
-        unitOfMeasures.add(uom2);
+        UnitOfMeasure uom = new UnitOfMeasure();
+        uom.setId(1L);
+        uomSet.add(uom);
 
-        when(unitOfMeasureRepository.findAll()).thenReturn(unitOfMeasures);
+        uom = new UnitOfMeasure();
+        uom.setId(2L);
+        uomSet.add(uom);
+
+        when(uomRepo.findAll()).thenReturn(uomSet);
 
         //when
-        Set<UnitOfMeasureCommand> commands = service.listAllUoms();
+        Set<UnitOfMeasureCommand> cmdSet = uomSvc.listAllUoms();
 
         //then
-        assertEquals(2, commands.size());
-        verify(unitOfMeasureRepository, times(1)).findAll();
+        assertEquals(2, cmdSet.size());
+        verify(uomRepo, times(1)).findAll();
     }
-
 }

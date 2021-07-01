@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RecipeCommandToRecipeTest {
+public class CommandToRecipeTest {
     public static final Long RECIPE_ID = 1L;
     public static final Integer COOK_TIME = Integer.valueOf("5");
     public static final Integer PREP_TIME = Integer.valueOf("7");
@@ -22,19 +22,21 @@ public class RecipeCommandToRecipeTest {
     public static final String SOURCE = "Source";
     public static final String URL = "Some URL";
     public static final Long CAT_ID_1 = 1L;
-    public static final Long CAT_ID2 = 2L;
-    public static final Long INGRED_ID_1 = 3L;
-    public static final Long INGRED_ID_2 = 4L;
+    public static final Long CAT_ID_2 = 2L;
+    public static final Long ING_ID_1 = 3L;
+    public static final Long ING_ID_2 = 4L;
     public static final Long NOTES_ID = 9L;
 
-    RecipeCommandToRecipe converter;
+    CommandToRecipe converter;
 
 
     @Before
     public void setUp() throws Exception {
-        converter = new RecipeCommandToRecipe(new CategoryCommandToCategory(),
-                new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure()),
-                new NotesCommandToNotes());
+        converter = new CommandToRecipe(
+                new CommandToCategory(),
+                new CommandToIngredient(
+                        new CommandToUnitOfMeasure()),
+                new CommandToNotes());
     }
 
     @Test
@@ -50,42 +52,39 @@ public class RecipeCommandToRecipeTest {
     @Test
     public void convert() throws Exception {
         //given
-        RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(RECIPE_ID);
-        recipeCommand.setCookTime(COOK_TIME);
-        recipeCommand.setPrepTime(PREP_TIME);
-        recipeCommand.setDescription(DESCRIPTION);
-        recipeCommand.setDifficulty(DIFFICULTY);
-        recipeCommand.setDirections(DIRECTIONS);
-        recipeCommand.setServings(SERVINGS);
-        recipeCommand.setSource(SOURCE);
-        recipeCommand.setUrl(URL);
+        RecipeCommand cmd = new RecipeCommand();
+        cmd.setId(RECIPE_ID);
+        cmd.setCookTime(COOK_TIME);
+        cmd.setPrepTime(PREP_TIME);
+        cmd.setDescription(DESCRIPTION);
+        cmd.setDifficulty(DIFFICULTY);
+        cmd.setDirections(DIRECTIONS);
+        cmd.setServings(SERVINGS);
+        cmd.setSource(SOURCE);
+        cmd.setUrl(URL);
 
-        NotesCommand notes = new NotesCommand();
-        notes.setId(NOTES_ID);
+        NotesCommand notesCmd = new NotesCommand();
+        notesCmd.setId(NOTES_ID);
+        cmd.setNotes(notesCmd);
 
-        recipeCommand.setNotes(notes);
+        CategoryCommand categoryCmd = new CategoryCommand();
+        categoryCmd.setId(CAT_ID_1);
+        cmd.getCategories().add(categoryCmd);
 
-        CategoryCommand category = new CategoryCommand();
-        category.setId(CAT_ID_1);
+        categoryCmd = new CategoryCommand();
+        categoryCmd.setId(CAT_ID_2);
+        cmd.getCategories().add(categoryCmd);
 
-        CategoryCommand category2 = new CategoryCommand();
-        category2.setId(CAT_ID2);
+        IngredientCommand ingCmd = new IngredientCommand();
+        ingCmd.setId(ING_ID_1);
+        cmd.getIngredients().add(ingCmd);
 
-        recipeCommand.getCategories().add(category);
-        recipeCommand.getCategories().add(category2);
-
-        IngredientCommand ingredient = new IngredientCommand();
-        ingredient.setId(INGRED_ID_1);
-
-        IngredientCommand ingredient2 = new IngredientCommand();
-        ingredient2.setId(INGRED_ID_2);
-
-        recipeCommand.getIngredients().add(ingredient);
-        recipeCommand.getIngredients().add(ingredient2);
+        ingCmd = new IngredientCommand();
+        ingCmd.setId(ING_ID_2);
+        cmd.getIngredients().add(ingCmd);
 
         //when
-        Recipe recipe = converter.convert(recipeCommand);
+        Recipe recipe = converter.convert(cmd);
 
         assertNotNull(recipe);
         assertEquals(RECIPE_ID, recipe.getId());
@@ -101,5 +100,4 @@ public class RecipeCommandToRecipeTest {
         assertEquals(2, recipe.getCategories().size());
         assertEquals(2, recipe.getIngredients().size());
     }
-
 }

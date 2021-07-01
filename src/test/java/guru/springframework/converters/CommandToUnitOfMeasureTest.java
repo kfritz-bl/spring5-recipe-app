@@ -7,17 +7,16 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class UnitOfMeasureCommandToUnitOfMeasureTest {
+public class CommandToUnitOfMeasureTest {
 
     public static final String DESCRIPTION = "description";
     public static final Long LONG_VALUE = 1L;
 
-    UnitOfMeasureCommandToUnitOfMeasure converter;
+    CommandToUnitOfMeasure converter;
 
     @Before
     public void setUp() throws Exception {
-        converter = new UnitOfMeasureCommandToUnitOfMeasure();
-
+        converter = new CommandToUnitOfMeasure();
     }
 
     @Test
@@ -33,12 +32,12 @@ public class UnitOfMeasureCommandToUnitOfMeasureTest {
     @Test
     public void convert() throws Exception {
         //given
-        UnitOfMeasureCommand command = new UnitOfMeasureCommand();
-        command.setId(LONG_VALUE);
-        command.setDescription(DESCRIPTION);
+        UnitOfMeasureCommand cmd = new UnitOfMeasureCommand();
+        cmd.setId(LONG_VALUE);
+        cmd.setDescription(DESCRIPTION);
 
         //when
-        UnitOfMeasure uom = converter.convert(command);
+        UnitOfMeasure uom = converter.convert(cmd);
 
         //then
         assertNotNull(uom);

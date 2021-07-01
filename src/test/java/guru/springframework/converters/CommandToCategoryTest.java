@@ -7,15 +7,15 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CategoryCommandToCategoryTest {
+public class CommandToCategoryTest {
 
     public static final Long ID_VALUE = 1L;
     public static final String DESCRIPTION = "description";
-    CategoryCommandToCategory converter;
+    CommandToCategory converter;
 
     @Before
     public void setUp() throws Exception {
-        converter = new CategoryCommandToCategory();
+        converter = new CommandToCategory();
     }
 
     @Test
@@ -31,17 +31,16 @@ public class CategoryCommandToCategoryTest {
     @Test
     public void convert() throws Exception {
         //given
-        CategoryCommand categoryCommand = new CategoryCommand();
-        categoryCommand.setId(ID_VALUE);
-        categoryCommand.setDescription(DESCRIPTION);
+        CategoryCommand cmd = new CategoryCommand();
+        cmd.setId(ID_VALUE);
+        cmd.setDescription(DESCRIPTION);
 
         //when
-        Category category = converter.convert(categoryCommand);
+        Category category = converter.convert(cmd);
 
         //then
         assert category != null;
         assertEquals(ID_VALUE, category.getId());
         assertEquals(DESCRIPTION, category.getDescription());
     }
-
 }

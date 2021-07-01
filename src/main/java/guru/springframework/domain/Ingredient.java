@@ -43,5 +43,4 @@ public class Ingredient {
         this.uom = uom;
         this.recipe = recipe;
     }
-
 }

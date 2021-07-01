@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 /**
  * Created by jt on 6/21/17.
  */
-public class IngredientToIngredientCommandTest {
+public class IngredientToCommandTest {
 
     public static final Recipe RECIPE = new Recipe();
     public static final BigDecimal AMOUNT = new BigDecimal("1");
@@ -23,11 +23,11 @@ public class IngredientToIngredientCommandTest {
     public static final Long ID_VALUE = 1L;
 
 
-    IngredientToIngredientCommand converter;
+    IngredientToCommand converter;
 
     @Before
     public void setUp() throws Exception {
-        converter = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+        converter = new IngredientToCommand(new UnitOfMeasureToCommand());
     }
 
     @Test
@@ -50,13 +50,13 @@ public class IngredientToIngredientCommandTest {
         ingredient.setDescription(DESCRIPTION);
         ingredient.setUom(null);
         //when
-        IngredientCommand ingredientCommand = converter.convert(ingredient);
+        IngredientCommand cmd = converter.convert(ingredient);
         //then
-        assert ingredientCommand != null;
-        assertNull(ingredientCommand.getUom());
-        assertEquals(ID_VALUE, ingredientCommand.getId());
-        assertEquals(AMOUNT, ingredientCommand.getAmount());
-        assertEquals(DESCRIPTION, ingredientCommand.getDescription());
+        assert cmd != null;
+        assertNull(cmd.getUom());
+        assertEquals(ID_VALUE, cmd.getId());
+        assertEquals(AMOUNT, cmd.getAmount());
+        assertEquals(DESCRIPTION, cmd.getDescription());
     }
 
     @Test
@@ -73,14 +73,14 @@ public class IngredientToIngredientCommandTest {
 
         ingredient.setUom(uom);
         //when
-        IngredientCommand ingredientCommand = converter.convert(ingredient);
+        IngredientCommand cmd = converter.convert(ingredient);
         //then
-        assert ingredientCommand != null;
-        assertEquals(ID_VALUE, ingredientCommand.getId());
-        assertNotNull(ingredientCommand.getUom());
-        assertEquals(UOM_ID, ingredientCommand.getUom().getId());
-        // assertEquals(RECIPE, ingredientCommand.get);
-        assertEquals(AMOUNT, ingredientCommand.getAmount());
-        assertEquals(DESCRIPTION, ingredientCommand.getDescription());
+        assert cmd != null;
+        assertEquals(ID_VALUE, cmd.getId());
+        assertNotNull(cmd.getUom());
+        assertEquals(UOM_ID, cmd.getUom().getId());
+        // assertEquals(RECIPE, cmd.get);
+        assertEquals(AMOUNT, cmd.getAmount());
+        assertEquals(DESCRIPTION, cmd.getDescription());
     }
 }

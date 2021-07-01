@@ -19,39 +19,38 @@ import static org.mockito.Mockito.*;
 public class ImageServiceImplTest {
 
     @Mock
-    RecipeRepository recipeRepository;
+    RecipeRepository recipeRepo;
 
-    ImageService imageService;
+    ImageService imageSvc;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        imageService = new ImageServiceImpl(recipeRepository);
+        imageSvc = new ImageServiceImpl(recipeRepo);
     }
 
     @Test
     public void saveImageFile() throws Exception {
         //given
         Long id = 1L;
-        MultipartFile multipartFile = new MockMultipartFile("imagefile", "testing.txt", "text/plain",
-                "Spring Framework Guru".getBytes());
+        MultipartFile multipartFile = new MockMultipartFile("imagefile", "testing.txt",
+                "text/plain", "Spring Framework Guru".getBytes());
 
         Recipe recipe = new Recipe();
         recipe.setId(id);
-        Optional<Recipe> recipeOptional = Optional.of(recipe);
+        Optional<Recipe> recipeOpt = Optional.of(recipe);
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepo.findById(anyLong())).thenReturn(recipeOpt);
 
         ArgumentCaptor<Recipe> argumentCaptor = ArgumentCaptor.forClass(Recipe.class);
 
         //when
-        imageService.saveImageFile(id, multipartFile);
+        imageSvc.saveImageFile(id, multipartFile);
 
         //then
-        verify(recipeRepository, times(1)).save(argumentCaptor.capture());
+        verify(recipeRepo, times(1)).save(argumentCaptor.capture());
         Recipe savedRecipe = argumentCaptor.getValue();
         assertEquals(multipartFile.getBytes().length, savedRecipe.getImage().length);
     }
-
 }
