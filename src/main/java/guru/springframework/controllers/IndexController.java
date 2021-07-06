@@ -6,24 +6,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * Created by jt on 6/1/17.
- */
+
 @Slf4j
 @Controller
 public class IndexController {
-
-    private final RecipeService recipeSvc;
-
-    public IndexController(RecipeService recipeSvc) {
-        this.recipeSvc = recipeSvc;
-    }
-
-    @RequestMapping({"", "/", "/index"})
-    public String getIndexPage(Model model) {
-        log.debug("Getting Index page");
-        model.addAttribute("recipes", recipeSvc.getRecipes());
-
-        return "index";
-    }
+	
+	private final RecipeService recipeSvc;
+	
+	public IndexController(RecipeService recipeSvc) {
+		this.recipeSvc = recipeSvc;
+	}
+	
+	@RequestMapping({"", "/", "/index"})
+	public String getIndexPage(Model model) {
+		log.debug("Getting Index page");
+		model.addAttribute("recipes", recipeSvc.getRecipes());
+		
+		return "index";
+	}
 }

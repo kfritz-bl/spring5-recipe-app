@@ -20,59 +20,57 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-/**
- * Created by jt on 6/17/17.
- */
+
 public class IndexControllerTest {
-
-    @Mock
-    RecipeService recipeSvc;
-
-    @Mock
-    Model model;
-
-    IndexController controller;
-
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-
-        controller = new IndexController(recipeSvc);
-    }
-
-    @Test
-    public void testMockMVC() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("index"));
-    }
-
-    @Test
-    public void getIndexPage() {
-        //given
-        Set<Recipe> recipes = new HashSet<>();
-        recipes.add(new Recipe());
-
-        Recipe recipe = new Recipe();
-        recipe.setId(1L);
-
-        recipes.add(recipe);
-
-        when(recipeSvc.getRecipes()).thenReturn(recipes);
-
-        @SuppressWarnings("unchecked")
-        ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
-
-        //when
-        String viewName = controller.getIndexPage(model);
-
-        //then
-        assertEquals("index", viewName);
-        verify(recipeSvc, times(1)).getRecipes();
-        verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
-        Set<Recipe> setInController = argumentCaptor.getValue();
-        assertEquals(2, setInController.size());
-    }
+	
+	@Mock
+	RecipeService recipeSvc;
+	
+	@Mock
+	Model model;
+	
+	IndexController controller;
+	
+	@Before
+	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		
+		controller = new IndexController(recipeSvc);
+	}
+	
+	@Test
+	public void testMockMVC() throws Exception {
+		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		
+		mockMvc.perform(get("/"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("index"));
+	}
+	
+	@Test
+	public void getIndexPage() {
+		//given
+		Set<Recipe> recipes = new HashSet<>();
+		recipes.add(new Recipe());
+		
+		Recipe recipe = new Recipe();
+		recipe.setId(1L);
+		
+		recipes.add(recipe);
+		
+		when(recipeSvc.getRecipes()).thenReturn(recipes);
+		
+		@SuppressWarnings("unchecked")
+		ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
+		
+		//when
+		String viewName = controller.getIndexPage(model);
+		
+		//then
+		assertEquals("index", viewName);
+		verify(recipeSvc, times(1)).getRecipes();
+		verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
+		Set<Recipe> setInController = argumentCaptor.getValue();
+		assertEquals(2, setInController.size());
+	}
 }

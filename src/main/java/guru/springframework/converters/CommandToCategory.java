@@ -8,23 +8,21 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by jt on 6/21/17.
- */
+
 @Slf4j
 @Component
 public class CommandToCategory implements Converter<CategoryCommand, Category> {
-
-    @Synchronized
-    @Nullable
-    @Override
-    public Category convert(CategoryCommand cmd) {
-        log.debug("Inside CategoryCommandToCategory.convert function.");
-        if (cmd == null) return null;
-
-        final Category category = new Category();
-        category.setId(cmd.getId());
-        category.setDescription(cmd.getDescription());
-        return category;
-    }
+	
+	@Synchronized
+	@Nullable
+	@Override
+	public Category convert(CategoryCommand cmd) {
+		log.debug("Inside CategoryCommandToCategory.convert function.");
+		if(cmd == null) return null;
+		
+		final Category category = new Category();
+		category.setId(cmd.getId());
+		category.setDescription(cmd.getDescription());
+		return category;
+	}
 }
