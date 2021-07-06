@@ -8,21 +8,31 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 
+/**
+ * The type Controller exception handler.
+ * Uses ControllerAdvice to create a global exception handler.
+ */
 @Slf4j
 @ControllerAdvice
 public class ControllerExceptionHandler {
 	
+	/**
+	 * Handle number format ModelAndView.
+	 *
+	 * @param exception the exception
+	 * @return the model and view
+	 */
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(NumberFormatException.class)
 	public ModelAndView handleNumberFormat(Exception exception) {
-		log.error("Handling Number Format Exception");
-		log.error(exception.getMessage());
+		log.error("Handling Number Format Exception: " + exception.getMessage());
 		
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setStatus(HttpStatus.BAD_REQUEST);
 		modelAndView.setViewName("error");
 		modelAndView.addObject("exception", exception);
-		modelAndView.addObject("status", 404);
-		modelAndView.addObject("titleMsg", "404 Not Found Error");
+		modelAndView.addObject("status", 400);
+		modelAndView.addObject("titleMsg", "400 Bad Request Error");
 		
 		return modelAndView;
 	}

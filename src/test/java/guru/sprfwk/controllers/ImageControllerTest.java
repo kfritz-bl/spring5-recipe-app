@@ -106,6 +106,6 @@ public class ImageControllerTest {
 				.andExpect(status().isBadRequest())
 				.andExpect(view().name("error"))
 				.andExpect(model().attributeExists("status"))
-				.andExpect(model().attribute("status", 404));
+				.andExpect(model().attribute("status", 400));
 	}
 }
